@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements CommonService<User, Long> {
@@ -26,7 +27,7 @@ public class UserService implements CommonService<User, Long> {
     }
 
     @Override
-    public User findById(Long value) {
+    public Optional<User> findById(Long id) {
         return null;
     }
 
@@ -36,7 +37,7 @@ public class UserService implements CommonService<User, Long> {
     }
 
     @Override
-    public void delete(Long value) {
+    public void delete(Long id) {
 
     }
 
