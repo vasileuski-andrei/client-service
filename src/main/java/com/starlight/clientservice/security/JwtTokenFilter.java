@@ -1,6 +1,6 @@
 package com.starlight.clientservice.security;
 
-import io.jsonwebtoken.JwtException;
+import com.starlight.clientservice.exception.JwtAuthenticationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
@@ -39,9 +40,10 @@ public class JwtTokenFilter extends GenericFilterBean {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-        } catch (JwtException e) {
+        } catch (JwtAuthenticationException e) {
+            log.info("Do filter: Jwt token is invalid or expired.");
             SecurityContextHolder.clearContext();
-            //log
+            ((HttpServletResponse) response).sendError(e.getHttpStatus().value());
         }
 
         chain.doFilter(request, response);

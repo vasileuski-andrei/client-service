@@ -1,8 +1,11 @@
 package com.starlight.clientservice.security;
 
+import com.starlight.clientservice.exception.JwtAuthenticationException;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -54,12 +58,10 @@ public class JwtTokenProvider {
             return !claimsJws.getBody().getExpiration().before(new Date());
 
         } catch (JwtException e) {
-            System.out.println("TOKEN IS INVALID");
-            //log - Jwt token is invalid
-            e.printStackTrace();
+            log.info("Jwt token is invalid or expired.");
+            throw new JwtAuthenticationException("Jwt token is invalid or expired.", HttpStatus.UNAUTHORIZED);
         }
 
-        return false;
     }
 
     public Authentication getAuthentication(String token) {
