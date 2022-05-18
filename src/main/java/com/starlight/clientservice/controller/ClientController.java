@@ -2,12 +2,14 @@ package com.starlight.clientservice.controller;
 
 import com.starlight.clientservice.model.Client;
 import com.starlight.clientservice.service.ClientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
@@ -22,6 +24,7 @@ public class ClientController {
     @GetMapping("/data")
     public List<Client> getAllClientsAndTheirOrders() {
         List<Client> users = clientService.getAll();
+        log.info("Get all clients");
         return users;
     }
 
