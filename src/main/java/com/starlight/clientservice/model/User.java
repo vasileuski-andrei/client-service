@@ -1,5 +1,6 @@
 package com.starlight.clientservice.model;
 
+import com.starlight.clientservice.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,8 @@ public class User {
     private String email;
     private String password;
     private LocalDate creationDate;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
 }
