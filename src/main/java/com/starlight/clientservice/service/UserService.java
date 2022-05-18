@@ -1,6 +1,8 @@
 package com.starlight.clientservice.service;
 
+import com.starlight.clientservice.model.Client;
 import com.starlight.clientservice.model.User;
+import com.starlight.clientservice.model.enums.Role;
 import com.starlight.clientservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class UserService implements CommonService<User, Long> {
     @Override
     public void save(User model) {
         model.setCreationDate(LocalDate.now());
+        model.setRole(Role.USER);
         userRepository.save(model);
 
     }
@@ -44,5 +47,9 @@ public class UserService implements CommonService<User, Long> {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }
