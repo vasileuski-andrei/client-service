@@ -1,8 +1,6 @@
 package com.starlight.clientservice.security;
 
-import com.starlight.clientservice.model.enums.Role;
 import io.jsonwebtoken.*;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

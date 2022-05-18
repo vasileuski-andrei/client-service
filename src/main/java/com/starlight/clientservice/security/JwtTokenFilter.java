@@ -1,6 +1,7 @@
 package com.starlight.clientservice.security;
 
 import io.jsonwebtoken.JwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class JwtTokenFilter extends GenericFilterBean {
 
@@ -32,6 +34,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
             if (token != null && jwtTokenProvider.isTokenValid(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                log.info("Authentication created.");
                 if (authentication != null) {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }

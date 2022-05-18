@@ -4,6 +4,7 @@ import com.starlight.clientservice.dto.AuthRequestDto;
 import com.starlight.clientservice.model.User;
 import com.starlight.clientservice.security.JwtTokenProvider;
 import com.starlight.clientservice.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -41,9 +42,9 @@ public class AuthController {
 
             String userEmail = requestDto.getEmail();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEmail, requestDto.getPassword()));
-            User user = userService.findByEmail(userEmail);
-            System.out.println("FIND USER " + user);
+            userService.findByEmail(userEmail);
             String token = jwtTokenProvider.createToken(userEmail);
+            log.info("Token created.");
             Map<Object, Object> credentialsResponse = new HashMap<>();
             credentialsResponse.put("email", userEmail);
             credentialsResponse.put("token", token);
@@ -52,7 +53,6 @@ public class AuthController {
 
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid data", HttpStatus.FORBIDDEN);
-
         }
 
     }

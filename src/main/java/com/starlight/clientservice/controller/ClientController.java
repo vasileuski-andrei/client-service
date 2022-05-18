@@ -24,7 +24,7 @@ public class ClientController {
     @GetMapping("/data")
     public List<Client> getAllClientsAndTheirOrders() {
         List<Client> users = clientService.getAll();
-        log.info("Get all clients");
+        log.info("Get all clients and orders.");
         return users;
     }
 
@@ -36,6 +36,7 @@ public class ClientController {
     @DeleteMapping("/delete/{id}")
     public String deleteClientAndAllHisOrders(@PathVariable Long id) {
         clientService.delete(id);
+        log.info("Client with id " + id + " was deleted.");
         return "Client with id " + id + " was deleted.";
     }
 
