@@ -1,7 +1,6 @@
 package com.starlight.clientservice.controller;
 
 import com.starlight.clientservice.dto.AuthRequestDto;
-import com.starlight.clientservice.model.User;
 import com.starlight.clientservice.security.JwtTokenProvider;
 import com.starlight.clientservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,7 @@ public class AuthController {
 
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
